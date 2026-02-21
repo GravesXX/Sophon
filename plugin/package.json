@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "openclaw": {
+    "extensions": ["./src/index.ts"]
+  },
   "dependencies": {
     "better-sqlite3": "^12.6.2",
     "uuid": "^13.0.0"
