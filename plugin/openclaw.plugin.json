@@ -1,0 +1,8 @@
+{
+  "id": "sophon",
+  "name": "Sophon - Humanities Companion",
+  "version": "0.1.0",
+  "description": "A humanities-focused conversational companion with topic memory and personality profiling",
+  "entry": "src/index.ts",
+  "skills": ["skills"]
+}
