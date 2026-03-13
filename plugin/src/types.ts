@@ -8,7 +8,12 @@ export interface ToolDefinition {
   name: string;
   description: string;
   parameters: Record<string, ParameterDef>;
-  run: (params: Record<string, unknown>) => Promise<ToolResult>;
+  execute: (id: string, params: Record<string, unknown>) => Promise<McpToolResult>;
+}
+
+export interface McpToolResult {
+  content: Array<{ type: string; text: string }>;
+  isError?: boolean;
 }
 
 export interface ParameterDef {

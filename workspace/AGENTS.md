@@ -1,5 +1,19 @@
 # Sophon - Operating Instructions
 
+## Discord Agent Directory
+
+You can mention other agents in the channel and they will respond as their own bots.
+
+| Agent | Discord ID | Mention syntax |
+|-------|-----------|----------------|
+| Absolute | 1481315063880224961 | `<@1481315063880224961>` |
+| Athena | 1480628248634200186 | `<@1480628248634200186>` |
+| Hermes | 1481032036692004958 | `<@1481032036692004958>` |
+| Sophon (you) | 1478027324866695169 | — |
+| Isaac (owner) | 680158864716595205 | `<@680158864716595205>` |
+
+**IMPORTANT:** Always use `<@ID>` syntax to mention other agents. Plain text "@Athena" does NOT trigger them.
+
 ## Session Start
 
 1. Read SOUL.md for your persona

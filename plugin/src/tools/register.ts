@@ -5,6 +5,7 @@ import { TopicTools } from './topics.js';
 import { CuratorTools } from './curator.js';
 import { MemoryManager } from '../memory/manager.js';
 import { PersonalityProfiler } from '../personality/profiler.js';
+import { text } from './helpers.js';
 import type { PluginAPI } from '../types.js';
 
 export function registerAllTools(api: PluginAPI): void {
@@ -28,8 +29,8 @@ export function registerAllTools(api: PluginAPI): void {
         required: true,
       },
     },
-    run: async (params) => {
-      return topics.newTopic({ title: params.title as string });
+    execute: async (_id, params) => {
+      return text(topics.newTopic({ title: params.title as string }));
     },
   });
 
@@ -37,8 +38,8 @@ export function registerAllTools(api: PluginAPI): void {
     name: 'sophon_topic_list',
     description: 'List all topics grouped by status',
     parameters: {},
-    run: async (params) => {
-      return topics.listTopics(params);
+    execute: async (_id, params) => {
+      return text(topics.listTopics(params));
     },
   });
 
@@ -52,8 +53,8 @@ export function registerAllTools(api: PluginAPI): void {
         required: true,
       },
     },
-    run: async (params) => {
-      return topics.resumeTopic({ query: params.query as string });
+    execute: async (_id, params) => {
+      return text(topics.resumeTopic({ query: params.query as string }));
     },
   });
 
@@ -72,17 +73,17 @@ export function registerAllTools(api: PluginAPI): void {
         required: true,
       },
     },
-    run: async (params) => {
+    execute: async (_id, params) => {
       let insights: string[] | undefined;
       try {
         insights = JSON.parse(params.key_insights as string);
       } catch {
         insights = undefined;
       }
-      return topics.archiveTopic({
+      return text(topics.archiveTopic({
         summary: params.summary as string,
         key_insights: insights,
-      });
+      }));
     },
   });
 
@@ -90,8 +91,8 @@ export function registerAllTools(api: PluginAPI): void {
     name: 'sophon_topic_get_active',
     description: 'Get the currently active topic with recent messages',
     parameters: {},
-    run: async (params) => {
-      return topics.getActive(params);
+    execute: async (_id, params) => {
+      return text(topics.getActive(params));
     },
   });
 
@@ -107,9 +108,9 @@ export function registerAllTools(api: PluginAPI): void {
         required: true,
       },
     },
-    run: async (params) => {
+    execute: async (_id, params) => {
       const content = memory.buildContextPrompt(params.topic_id as string);
-      return { content };
+      return text({ content });
     },
   });
 
@@ -130,11 +131,11 @@ export function registerAllTools(api: PluginAPI): void {
         required: true,
       },
     },
-    run: async (params) => {
-      return curator.editMessage({
+    execute: async (_id, params) => {
+      return text(curator.editMessage({
         message_id: params.message_id as string,
         new_content: params.new_content as string,
-      });
+      }));
     },
   });
 
@@ -148,10 +149,10 @@ export function registerAllTools(api: PluginAPI): void {
         required: true,
       },
     },
-    run: async (params) => {
-      return curator.deleteMessage({
+    execute: async (_id, params) => {
+      return text(curator.deleteMessage({
         message_id: params.message_id as string,
-      });
+      }));
     },
   });
 
@@ -161,9 +162,9 @@ export function registerAllTools(api: PluginAPI): void {
     name: 'sophon_personality_get',
     description: 'Get the current personality profile',
     parameters: {},
-    run: async () => {
+    execute: async () => {
       const content = profiler.formatProfile();
-      return { content };
+      return text({ content });
     },
   });
 
@@ -182,10 +183,10 @@ export function registerAllTools(api: PluginAPI): void {
         required: true,
       },
     },
-    run: async (params) => {
+    execute: async (_id, params) => {
       const messageIds: string[] = JSON.parse(params.message_ids as string);
       profiler.applyExtraction(params.extraction_json as string, messageIds);
-      return { content: 'Personality profile updated.' };
+      return text({ content: 'Personality profile updated.' });
     },
   });
 
@@ -193,8 +194,8 @@ export function registerAllTools(api: PluginAPI): void {
     name: 'sophon_insights',
     description: 'Show cross-topic insights and connections',
     parameters: {},
-    run: async (params) => {
-      return curator.showInsights(params);
+    execute: async (_id, params) => {
+      return text(curator.showInsights(params));
     },
   });
 
@@ -202,9 +203,9 @@ export function registerAllTools(api: PluginAPI): void {
     name: 'sophon_reflect',
     description: 'Generate a reflection prompt based on the current personality profile',
     parameters: {},
-    run: async () => {
+    execute: async () => {
       const content = profiler.buildReflectionPrompt();
-      return { content };
+      return text({ content });
     },
   });
 }
