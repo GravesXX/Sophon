@@ -9,8 +9,8 @@ import { text } from './helpers.js';
 import type { PluginAPI } from '../types.js';
 
 export function registerAllTools(api: PluginAPI): void {
-  const dbPath = path.join(os.homedir(), '.sophon', 'sophon.db');
-  const db = new SophonDB(dbPath);
+  const vaultPath = path.join(os.homedir(), 'Documents', 'Obsidian Vault');
+  const db = new SophonDB(vaultPath);
 
   const topics = new TopicTools(db);
   const curator = new CuratorTools(db);
